@@ -198,7 +198,7 @@ const n=document.querySelector('.n'),
       bfr();
       a+=`<article><h3><span>${new Date(location.localtime).toLocaleString(
         'default',{weekday:'long',hour:'numeric',minute:'2-digit',hour12:true})
-        .replace(/(?<=\w )/,'<span>')}</span></span></h3>
+        .replace(/(?<=\p{L} )/u,'<span>')}</span></span></h3>
         <p><span>${Math.round(current['temp_'+t])}°${T}</span>
         <button type="button">${t=='c'?'F':'C'}</button>
         <img src=https:${current.condition.icon} alt='${current.condition.text}'>
