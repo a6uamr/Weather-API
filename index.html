@@ -13,8 +13,8 @@ html {--c: #bfc1c8; --c1: #009ad8; --bg: #1e202b; --bg1: #262936;}
 ::selection {color: #fff; background: #009ad880;}
 body {color: var(--c); background: var(--bg);
   font-family: 'Varela Round', sans-serif; margin: 0;}
-a {text-decoration: none;}
-a:active {-webkit-tap-highlight-color: #0000; scale: .97;}
+a {-webkit-tap-highlight-color: #0000; text-decoration: none;}
+a:active {scale: .97;}
 input, button {font-family: inherit; font-size: 1em;}
 button {cursor: pointer;}
 body>* {padding-inline: 12px;}
@@ -38,7 +38,8 @@ h1 span>:last-child {color: var(--c); font-weight: 400; font-size: .7em;
 @media (width<992px) {
   .n {overflow-y: hidden; flex-flow: wrap; transition: height .4s;}
   .n:not(.n1) {height: var(--h,60px);} .n1 {height: var(--H);}
-  .n>button {color: #fff; background: 0; padding: 1.5em 1em; border: 0;}
+  .n>button {color: #fff; background: 0; -webkit-tap-highlight-color: #0000;
+    padding: 1.5em 1em; border: 0;}
   .n>button::before, .n>button::after {content: ''; width: 1.5em; display: block;
     border-top: 3px solid; border-radius: 2px; transition: .4s;}
   .n:not(.n1)>button::before {translate: 0 -150%;}
@@ -103,9 +104,10 @@ h3>span>span {float: right;}
   article:first-of-type>p {width: fit-content; margin-inline: auto;}}
 article:first-of-type>p>span:first-child {color: #fff; font-weight: 700;
   font-size: 4em;}
-article:first-of-type>p>span:nth-child(2) {font-size: 1.5em; padding: .25em;
-  border-left: 2px solid; margin-left: .25em; -webkit-user-select: none;
-  user-select: none; cursor: pointer;}
+article:first-of-type button {color: inherit; background: 0; font-size: 1.5em;
+  padding: .25em; border: 0; border-left: 2px solid; margin-left: .25em;}
+article:first-of-type button:is(:focus-visible,:active) {color: #fff;}
+article:first-of-type button:focus-visible {outline: 0;}
 article:first-of-type img:first-of-type {vertical-align: top; margin-right: -1em;}
 article:first-of-type img:not([alt=precip]) {margin-left: .75em;}
 h3+p>span:last-of-type {color: var(--c1); margin-block: .5em 1em; display: block;}
@@ -116,11 +118,12 @@ article+article>p>span:first-of-type {color: #fff; display: block;}
 footer {background: var(--bg1); padding-block: 1.5em;}
 :has(>.bs) {position: relative;}
 :has(+.bs) {padding-right: 11em;}
-.bs {color: #fff; background: var(--c1) padding-box; padding-inline: 1.5em;
+.bs {color: #fff; background: var(--c1) padding-box;
+  -webkit-tap-highlight-color: #0000; padding-inline: 1.5em;
   border: 5px solid #0000; border-radius: 2em; position: absolute;
   inset: 0 0 0 auto;}
 .bs:focus-visible {outline: .125em solid;}
-.bs:active {-webkit-tap-highlight-color: #0000; scale: .97;}
+.bs:active {scale: .97;}
 footer>ul {list-style: none; padding-left: 0; display: flex; gap: .3em;}
 footer>ul a {font: 1.4em/2em b; text-align: center; width: 2em;
   border-radius: 50%; display: block; transition: .15s;}
@@ -193,11 +196,11 @@ const n=document.querySelector('.n'),
       h2.firstElementChild.textContent=
         location.name+', '+location.region+', '+location.country;
       bfr();
-      a+=`<article><h3><span>${new Date(location.localtime)
-        .toLocaleString('default',{weekday:'long',hour:'numeric',minute:'2-digit'})
+      a+=`<article><h3><span>${new Date(location.localtime).toLocaleString(
+        'default',{weekday:'long',hour:'numeric',minute:'2-digit',hour12:true})
         .split(/(?<=[a-z] )/).join('<span>')}</span></span></h3>
         <p><span>${Math.round(current['temp_'+t])}°${T}</span>
-        <span>${t=='c'?'F':'C'}</span>
+        <button type="button">${t=='c'?'F':'C'}</button>
         <img src=https:${current.condition.icon} alt='${current.condition.text}'>
         <span>${current.condition.text}</span>
         <img src="pr.png" alt="precip" title="precip"> ${current['precip_'+p]} ${p}
@@ -213,7 +216,7 @@ const n=document.querySelector('.n'),
           ${Math.round(d.day['mintemp_'+t])}°${T}
           <span>${d.day.condition.text}</span></p></article>`;}
       h2.nextElementSibling.innerHTML=a;
-      h2.nextElementSibling.querySelector('p>span:nth-child(2)')
+      h2.nextElementSibling.querySelector('button')
       .onclick=()=>{localStorage.setItem('u',JSON.stringify(u=u=='c mm kph'?
         'f in mph':'c mm kph')); f(l);};}).catch(()=>0);};
 fetch('https://ipapi.co/json',{signal:(c=new AbortController()).signal})
