@@ -87,7 +87,7 @@ h2+div {overflow: hidden; border-radius: 1em;}
 @keyframes pls {50% {opacity: .2;}}
 .pls+::after {content:''; opacity: 0; background: #000; position: absolute;
   inset: 0; animation: pls 1.5s ease-in-out infinite;}
-/* article {overflow: auto;} */
+article {overflow: auto;}
 article:nth-child(odd) {background: #262936;}
 article:nth-child(even) {background: #323544;}
 article:first-of-type {min-height: 261px;}
@@ -198,7 +198,7 @@ const n=document.querySelector('.n'),
       bfr();
       a+=`<article><h3><span>${new Date(location.localtime).toLocaleString(
         'default',{weekday:'long',hour:'numeric',minute:'2-digit',hour12:true})
-        .split(/(?<=[a-z] )/).join('<span>')}</span></span></h3>
+        .replace(/(?<=\w )/,'<span>')}</span></span></h3>
         <p><span>${Math.round(current['temp_'+t])}°${T}</span>
         <button type="button">${t=='c'?'F':'C'}</button>
         <img src=https:${current.condition.icon} alt='${current.condition.text}'>
