@@ -188,7 +188,7 @@ let u=JSON.parse(localStorage.getItem('u'))||'c mm kph', c;
 const n=document.querySelector('.n'),
   is=document.querySelector('.is'), h2=document.querySelector('h2'),
   bfr=()=>h2.dataset.bfr=innerWidth>h2.clientWidth*2+32?h2.textContent:'',
-  f=(l)=>{fetch(`https://api.weatherapi.com/v1/forecast.json?key=c023aef25a10409185674936230808&q=${l}&days=3`,
+  f=(l)=>{fetch(`https://api.weatherapi.com/v1/forecast.json?key=5abf270aca664bd0b03131507251705&q=${l}&days=3`,
     {signal:(c=new AbortController()).signal})
     .then(r=>r.json()).then(({location,current,forecast})=>{
       const [t,p,w]=u.split(' '), T=t=='c'?'C':'F'; let a='';
@@ -234,7 +234,7 @@ document.onclick=e=>{if (n.classList.contains('n1') &&
   e.clientY>n.getBoundingClientRect().bottom) n.classList.remove('n1');};
 is.oninput=()=>{
   if (is.value!=false) {c.abort(); const s=is.value; h2.classList.add('pls');
-    fetch(`https://api.weatherapi.com/v1/search.json?key=c023aef25a10409185674936230808&q=${s}`,
+    fetch(`https://api.weatherapi.com/v1/search.json?key=5abf270aca664bd0b03131507251705&q=${s}`,
     {signal:(c=new AbortController()).signal}).then(r=>r.json()).then(([l])=>{
       if (l) f(s); else h2.classList.remove('pls');}).catch(()=>0);}
   is.nextElementSibling.style.display=is.value?'block':'none';};
